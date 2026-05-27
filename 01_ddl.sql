@@ -84,6 +84,8 @@ CREATE TABLE Borrowings (
     ReturnDate DATE NULL,
     
     CONSTRAINT CHK_Dates CHECK (DueDate >= BorrowDate),
+	CONSTRAINT CHK_MaxBorrowDays
+    CHECK (DATEDIFF(DAY, BorrowDate, DueDate) <= 60),
     
     FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
     FOREIGN KEY (BookID) REFERENCES Books(BookID)
