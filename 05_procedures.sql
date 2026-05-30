@@ -13,6 +13,13 @@ CREATE PROCEDURE sp_BorrowBook
 AS
 BEGIN
 
+   -- En fazla 60 gün ödünç alınabilir
+    IF DATEDIFF(DAY, CAST(GETDATE() AS DATE), @DueDate) > 60
+    BEGIN
+        PRINT 'Odunc suresi 60 gunden fazla olamaz.';
+        RETURN;
+    END
+        
 -- Stok kontrolü
     IF EXISTS (
         SELECT 1
