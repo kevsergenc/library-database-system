@@ -1,9 +1,6 @@
 USE libraryDB;
 GO
 
-
--- Kitap ödünç verme işlemi
-
 CREATE PROCEDURE sp_BorrowBook
 (
     @MemberID INT,
@@ -57,9 +54,7 @@ BEGIN
 END;
 GO
 
-
-
--- Geciken kitap cezalarını hesapla
+-- Geciken kitap cezalarını hesaplar
 
 CREATE PROCEDURE sp_CreateLateFine
 AS
@@ -95,9 +90,7 @@ BEGIN
 END;
 GO
 
-
-
--- Üyenin ödünç geçmişi
+-- Üyenin ödünç geçmişini verir
 
 CREATE PROCEDURE sp_MemberBorrowHistory
 (
