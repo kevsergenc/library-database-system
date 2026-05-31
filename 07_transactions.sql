@@ -1,9 +1,6 @@
-/* En az 3 Transaction bloğu, En az 1 TRY/CATCH ve İzolasyon Seviyesi için */
-
 USE libraryDB;
 GO
 
--- TRANSACTION 1: Kitap İade ve Ceza Kesme Senaryosu (TRY...CATCH İçerir)
 CREATE PROCEDURE sp_ReturnBook_Tx
     @BorrowingID INT
 AS
@@ -43,7 +40,6 @@ BEGIN
 END;
 GO
 
--- TRANSACTION 2: Ceza Ödeme Senaryosu
 CREATE PROCEDURE sp_PayFine_Tx
     @FineID INT
 AS
@@ -63,7 +59,6 @@ BEGIN
 END;
 GO
 
--- TRANSACTION 3: Yeni Kategori ve Kitap Ekleme Senaryosu (Zincirleme İşlem)
 CREATE PROCEDURE sp_AddNewCategoryAndBook_Tx
     @CatName NVARCHAR(50), @TargetAud NVARCHAR(20),
     @ISBN VARCHAR(13), @Title NVARCHAR(200), @AuthID INT, @PubID INT, @ShelfID INT
