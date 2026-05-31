@@ -88,3 +88,68 @@ BEGIN
         COMMIT TRANSACTION;
 END;
 GO
+
+SELECT *
+FROM Borrowings
+WHERE ReturnDate IS NULL;
+
+EXEC sp_ReturnBook_Tx
+    @BorrowingID = 3;
+
+SELECT *
+FROM Borrowings
+WHERE BorrowingID = 3;
+
+SELECT *
+FROM Books;
+
+SELECT *
+FROM Fines
+ORDER BY FineID DESC;
+
+EXEC sp_ReturnBook_Tx
+    @BorrowingID = 3;
+
+SELECT *
+FROM Fines
+WHERE PaymentStatus = 'Unpaid';
+
+EXEC sp_PayFine_Tx
+    @FineID = 4;
+
+SELECT *
+FROM Fines
+WHERE FineID = 4;
+
+EXEC sp_PayFine_Tx
+    @FineID = 4;
+
+EXEC sp_AddNewCategoryAndBook_Tx
+    @CatName = 'Cyber Security',
+    @TargetAud = 'Academic',
+    @ISBN = '9999999999999',
+    @Title = 'Ethical Hacking',
+    @AuthID = 1,
+    @PubID = 1,
+    @ShelfID = 1;
+
+SELECT *
+FROM Categories
+WHERE CategoryName = 'Cyber Security';
+
+SELECT *
+FROM Books
+WHERE Title = 'Ethical Hacking';
+
+EXEC sp_AddNewCategoryAndBook_Tx
+    @CatName = 'TestCategory',
+    @TargetAud = 'Academic',
+    @ISBN = '8888888888888',
+    @Title = 'TestBook',
+    @AuthID = 1,
+    @PubID = 9999,
+    @ShelfID = 1;
+
+SELECT *
+FROM Categories
+WHERE CategoryName = 'TestCategory';
