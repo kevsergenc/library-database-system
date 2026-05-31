@@ -44,3 +44,69 @@ BEGIN
     END
 END;
 GO
+
+INSERT INTO Members
+(
+    FirstName,
+    LastName,
+    Email,
+    TCNo,
+    PhoneNumber,
+    MemberStatus
+)
+VALUES
+(
+    'Test',
+    'Kullanici',
+    'test@example.com',
+    '99999999999',
+    '05550000000',
+    'Active'
+);
+
+SELECT * FROM SystemLogs;
+
+INSERT INTO Members
+(
+    FirstName,
+    LastName,
+    Email,
+    TCNo,
+    PhoneNumber,
+    MemberStatus
+)
+VALUES
+(
+    'Pasif',
+    'Uye',
+    'pasif@example.com',
+    '88888888888',
+    '05551111111',
+    'Passive'
+);
+
+SELECT *
+FROM Members
+WHERE Email='pasif@example.com';
+
+INSERT INTO Borrowings
+(
+    MemberID,
+    BookID,
+    BorrowDate,
+    DueDate
+)
+VALUES
+(
+    14,
+    1,
+    GETDATE(),
+    DATEADD(DAY,14,GETDATE())
+);
+
+SELECT *
+FROM Borrowings
+WHERE MemberID = 14;
+
+
+
