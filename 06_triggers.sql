@@ -1,9 +1,6 @@
-/* En az 2 Trigger: 1 Loglama, 1 İş Kuralı için */
-
 USE libraryDB;
 GO
 
--- 1. Loglama Tablosu (Trigger'ın çalışacağı hedef)
 CREATE TABLE SystemLogs (
     LogID INT IDENTITY(1,1) PRIMARY KEY,
     TableName NVARCHAR(50),
@@ -13,7 +10,6 @@ CREATE TABLE SystemLogs (
 );
 GO
 
--- TRIGGER 1: AFTER INSERT Loglama (Yeni üye eklendiğinde log atar)
 CREATE TRIGGER trg_LogNewMember
 ON Members
 AFTER INSERT
@@ -25,13 +21,12 @@ BEGIN
 END;
 GO
 
--- TRIGGER 2: İş Kuralı (Pasif veya Askıya Alınmış üyelerin kitap almasını engeller)
 CREATE TRIGGER trg_PreventBorrowing
 ON Borrowings
 AFTER INSERT
 AS
 BEGIN
-    -- Eklenen kayıtlardan, statüsü 'Active' olmayanları tespit et
+    -- Eklenen kayıtlardan, statüsü 'Active' olmayanları tespit eder
     IF EXISTS (
         SELECT 1 
         FROM inserted i
@@ -107,6 +102,5 @@ VALUES
 SELECT *
 FROM Borrowings
 WHERE MemberID = 14;
-
 
 
