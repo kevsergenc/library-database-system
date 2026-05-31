@@ -1,11 +1,7 @@
-/* Veri Ambarı Katmanı ve ROLLUP/CUBE fonksiyonlu En Az Bir Adet Özet Analiz Sorgusu */
-
 USE libraryDB;
 GO
 
--- ==========================================
--- ADIM 1: YILDIZ ŞEMA (STAR SCHEMA) TABLOLARI
--- ==========================================
+
 CREATE TABLE DimDate (
     DateKey INT PRIMARY KEY,
     Year INT,
@@ -28,10 +24,9 @@ CREATE TABLE FactLibraryMetrics (
 );
 GO
 
--- ==========================================
--- ADIM 2: ETL İŞLEMİ (Veri Ambarına Veri Aktarımı)
+-- ETL İŞLEMİ
 -- (Sistemin veri ambarı olduğunu ispatlamak için temsili doldurma)
--- ==========================================
+
 INSERT INTO DimDate (DateKey, Year, Month, Quarter)
 SELECT DISTINCT 
     CAST(FORMAT(BorrowDate, 'yyyyMMdd') AS INT), 
@@ -55,11 +50,11 @@ LEFT JOIN Fines f ON br.BorrowingID = f.BorrowingID
 GROUP BY CAST(FORMAT(br.BorrowDate, 'yyyyMMdd') AS INT), b.CategoryID;
 GO
 
--- ==========================================
--- ADIM 3: OLAP SORGULARI (İSTENEN ROLLUP / CUBE KULLANIMI)
--- ==========================================
 
--- CUBE KULLANIMI: Yıl ve Kategori Çapraz Analizi (Alt toplamlar ve genel toplam verir)
+--OLAP SORGULARI
+
+
+-- Yıl ve Kategori Çapraz Analizi (Alt toplamlar ve genel toplam verir)
 SELECT 
     d.Year AS Yil,
     c.CategoryName AS Kategori,
